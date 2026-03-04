@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Copilot Portfolio | Talal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="header">
+    <div class="container header__content">
+      <div class="brand">
+        <span class="brand__logo" aria-hidden="true">★</span>
+        <span class="brand__name">Talal</span>
+      </div>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
+          Menu
+        </button>
+
+        <ul class="nav__menu" id="navMenu">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <button class="btn btn--ghost" id="themeToggle" aria-label="Toggle dark mode">
+              Dark mode
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero__content">
+        <div>
+          <h1>My Portfolio</h1>
+          <p class="lead">
+            A simple portfolio built with <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong>.
+            Deployed on <strong>GitHub Pages</strong>.
+          </p>
+          <div class="hero__actions">
+            <a class="btn" href="#projects">View Projects</a>
+            <a class="btn btn--ghost" href="#contact">Contact Me</a>
+          </div>
+        </div>
+
+        <div class="hero__card" aria-label="Profile card">
+          <img
+            src="https://via.placeholder.com/480x320.png?text=Your+Photo"
+            alt="A placeholder profile image for Talal"
+            class="hero__img"
+          />
+          <div class="hero__info">
+            <p><strong>Name:</strong> Talal</p>
+            <p><strong>Focus:</strong> Web Development</p>
+            <p><strong>Status:</strong> Student / Developer</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <h2>About Me</h2>
+        <p>
+          Hi! I’m Talal. I enjoy building clean, responsive websites and learning how to use tools like GitHub and Copilot
+          to improve my coding workflow. This portfolio shows my skills in structuring pages with HTML, styling with CSS,
+          and adding interactivity with JavaScript.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section__head">
+          <h2>Projects</h2>
+          <div class="filters" role="group" aria-label="Project filters">
+            <button class="chip is-active" data-filter="all">All</button>
+            <button class="chip" data-filter="web">Web</button>
+            <button class="chip" data-filter="js">JavaScript</button>
+          </div>
+        </div>
+
+        <div class="grid" id="projectGrid">
+          <article class="card" data-category="web">
+            <img
+              src="https://via.placeholder.com/800x450.png?text=Project+1"
+              alt="Screenshot placeholder for Project 1"
+              class="card__img"
+            />
+            <div class="card__body">
+              <h3>Portfolio Website</h3>
+              <p>A responsive portfolio with sections and navigation.</p>
+              <button class="btn btn--small" data-modal="modal1">View Details</button>
+            </div>
+          </article>
+
+          <article class="card" data-category="js">
+            <img
+              src="https://via.placeholder.com/800x450.png?text=Project+2"
+              alt="Screenshot placeholder for Project 2"
+              class="card__img"
+            />
+            <div class="card__body">
+              <h3>Interactive To-Do</h3>
+              <p>A mini app showing DOM manipulation and local features.</p>
+              <button class="btn btn--small" data-modal="modal2">View Details</button>
+            </div>
+          </article>
+
+          <article class="card" data-category="web">
+            <img
+              src="https://via.placeholder.com/800x450.png?text=Project+3"
+              alt="Screenshot placeholder for Project 3"
+              class="card__img"
+            />
+            <div class="card__body">
+              <h3>Landing Page</h3>
+              <p>A clean landing page layout with responsive grid.</p>
+              <button class="btn btn--small" data-modal="modal3">View Details</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="container">
+        <h2>Skills</h2>
+        <ul class="skills">
+          <li>HTML (semantic structure, accessibility)</li>
+          <li>CSS (layout, responsive design)</li>
+          <li>JavaScript (DOM, events, interactivity)</li>
+          <li>Git & GitHub (repos, commits, branches)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <h2>Contact</h2>
+        <p>Send me a message (this demo validates the form with JavaScript):</p>
+
+        <form class="form" id="contactForm" novalidate>
+          <label>
+            Name
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </label>
+
+          <label>
+            Email
+            <input type="email" id="email" name="email" placeholder="you@example.com" required />
+          </label>
+
+          <label>
+            Message
+            <textarea id="message" name="message" rows="4" placeholder="Write your message..." required></textarea>
+          </label>
+
+          <button class="btn" type="submit">Send</button>
+          <p class="form__status" id="formStatus" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <p>© <span id="year"></span> Talal • Built with HTML, CSS, JS</p>
+      <a href="#main">Back to top</a>
+    </div>
+  </footer>
+
+  <!-- Modals -->
+  <div class="modal" id="modal1" aria-hidden="true" role="dialog" aria-label="Project 1 details">
+    <div class="modal__content">
+      <button class="modal__close" data-close>✕</button>
+      <h3>Portfolio Website</h3>
+      <p>Includes navigation, sections, responsive layout, and accessibility features.</p>
+    </div>
+  </div>
+
+  <div class="modal" id="modal2" aria-hidden="true" role="dialog" aria-label="Project 2 details">
+    <div class="modal__content">
+      <button class="modal__close" data-close>✕</button>
+      <h3>Interactive To-Do</h3>
+      <p>Demonstrates JavaScript events and DOM updates (example project description).</p>
+    </div>
+  </div>
+
+  <div class="modal" id="modal3" aria-hidden="true" role="dialog" aria-label="Project 3 details">
+    <div class="modal__content">
+      <button class="modal__close" data-close>✕</button>
+      <h3>Landing Page</h3>
+      <p>A simple landing page layout with cards and responsive grid.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
