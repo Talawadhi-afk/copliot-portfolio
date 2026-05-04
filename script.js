@@ -1,102 +1,111 @@
-// Footer year
-document.getElementById("year").textContent = new Date().getFullYear();
-
-// Mobile nav toggle
 const navToggle = document.getElementById("navToggle");
 const navMenu = document.getElementById("navMenu");
-
-navToggle.addEventListener("click", () => {
-  const isOpen = navMenu.classList.toggle("is-open");
-  navToggle.setAttribute("aria-expanded", String(isOpen));
-});
-
-// Theme toggle (dark/light)
 const themeToggle = document.getElementById("themeToggle");
+const year = document.getElementById("year");
+const filterButtons = document.querySelectorAll("[data-filter]");
+const projectCards = document.querySelectorAll("[data-category]");
+const modalButtons = document.querySelectorAll("[data-modal]");
+const closeButtons = document.querySelectorAll("[data-close]");
+const contactForm = document.getElementById("contactForm");
+const formStatus = document.getElementById("formStatus");
 
-function setTheme(isLight) {
-  document.body.classList.toggle("light", isLight);
-  themeToggle.textContent = isLight ? "Light mode" : "Dark mode";
-  localStorage.setItem("theme", isLight ? "light" : "dark");
+if (year) {
+  year.textContent = new Date().getFullYear();
 }
 
-const savedTheme = localStorage.getItem("theme");
-setTheme(savedTheme === "light");
+if (navToggle && navMenu) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = navMenu.classList.toggle("is-open");
+    navToggle.setAttribute("aria-expanded", isOpen);
+  });
+}
 
-themeToggle.addEventListener("click", () => {
-  const isLight = !document.body.classList.contains("light");
-  setTheme(isLight);
-});
+if (themeToggle) {
+  const savedTheme = localStorage.getItem("theme");
 
-// Project filters
-const filterButtons = document.querySelectorAll("[data-filter]");
-const projectCards = document.querySelectorAll(".card");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+    themeToggle.textContent = "Light mode";
+  }
 
-filterButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    filterButtons.forEach((b) => b.classList.remove("is-active"));
-    btn.classList.add("is-active");
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
 
-    const filter = btn.dataset.filter;
+    const isDark = document.body.classList.contains("dark");
+    themeToggle.textContent = isDark ? "Light mode" : "Dark mode";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+}
+
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const filter = button.dataset.filter;
+
+    filterButtons.forEach((btn) => btn.classList.remove("is-active"));
+    button.classList.add("is-active");
+
     projectCards.forEach((card) => {
       const category = card.dataset.category;
-      const show = filter === "all" || category === filter;
-      card.style.display = show ? "block" : "none";
+      card.style.display = filter === "all" || filter === category ? "block" : "none";
     });
   });
 });
 
-// Modals
-const modalButtons = document.querySelectorAll("[data-modal]");
-const closeButtons = document.querySelectorAll("[data-close]");
+modalButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const modalId = button.dataset.modal;
+    const modal = document.getElementById(modalId);
 
-function openModal(id) {
-  const modal = document.getElementById(id);
-  if (!modal) return;
-  modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
-}
-
-function closeModal(modal) {
-  modal.classList.remove("is-open");
-  modal.setAttribute("aria-hidden", "true");
-}
-
-modalButtons.forEach((btn) => {
-  btn.addEventListener("click", () => openModal(btn.dataset.modal));
-});
-
-closeButtons.forEach((btn) => {
-  btn.addEventListener("click", () => closeModal(btn.closest(".modal")));
-});
-
-document.querySelectorAll(".modal").forEach((modal) => {
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal(modal);
+    if (modal) {
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+    }
   });
 });
 
-// Contact form validation (demo)
-const form = document.getElementById("contactForm");
-const statusEl = document.getElementById("formStatus");
+closeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const modal = button.closest(".modal");
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message").value.trim();
-
-  if (!name || !email || !message) {
-    statusEl.textContent = "Please fill in all fields.";
-    return;
-  }
-
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  if (!emailOk) {
-    statusEl.textContent = "Please enter a valid email address.";
-    return;
-  }
-
-  statusEl.textContent = "Message sent! (Demo only — no real email is sent.)";
-  form.reset();
+    if (modal) {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+  });
 });
+
+document.querySelectorAll(".modal").forEach((modal) => {
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+  });
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    document.querySelectorAll(".modal").forEach((modal) => {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    });
+  }
+});
+
+if (contactForm && formStatus) {
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !email || !message) {
+      formStatus.textContent = "Please fill in all fields before sending.";
+      return;
+    }
+
+    formStatus.textContent = "Thank you! Your message was validated successfully.";
+    contactForm.reset();
+  });
+}
